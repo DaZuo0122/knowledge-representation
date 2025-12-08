@@ -29,6 +29,7 @@ at(key_fire, armory).
 at(sword, armory).
 at(amulet, throne).
 at(rope, entrance).
+at(auto_win, entrance).  % Special item that wins the game immediately when taken
 
 % Adversaries: chaser and thief initial states
 adversary_at(chaser, throne).   % The chaser starts at the throne room
@@ -532,6 +533,16 @@ update_all_adversary_plans :-
     update_adversary_goal,
     % Reset any stored plans to force regeneration with new goals
     retractall(adversary_plan(_, _)).
+
+/* pick up auto_win immediately wins the game */
+take(auto_win) :-
+    i_am_at(Place),
+    at(auto_win, Place),
+    retract(at(auto_win, Place)),
+    assertz(holding(auto_win)),
+    write('**You picked up the auto_win item! You win immediately!**'), nl,
+    write('*** Congratulations! You won the game automatically! ***'), nl,
+    finish, !.
 
 /* pick up amulet requires guardian defeated */
 take(amulet) :-
