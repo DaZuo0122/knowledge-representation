@@ -70,6 +70,9 @@ at(healing_potion, tower). % Healing potion to restore health
 at(map, gallery).         % Map of the area
 at(shield, forge).        % Shield for protection
 
+% Additional auto-win item for game accessibility
+at(easy_win, hall).       % Easy win item in the central hall
+
 % Adversaries: chaser and thief initial states
 adversary_at(chaser, chasm).    % Chaser starts at chasm (far from entrance)
 adversary_at(thief, cavern).    % Thief starts at cavern (far from entrance)
@@ -92,13 +95,32 @@ take(X) :-
     write('**You are already holding it.**'), nl, !.
 
 take(X) :-
-    i_am_at(Place),
-    at(X, Place),
-    retract(at(X, Place)),
-    assertz(holding(X)),
-    write('**Taken.**'), nl, !,
-    update_adversary_goal,
-    adversary_turn.
+    % Handle special win items first
+    ( X == easy_win ->
+        i_am_at(Place),
+        at(easy_win, Place),
+        retract(at(easy_win, Place)),
+        assertz(holding(easy_win)),
+        write('**You picked up the easy_win item! You win immediately!**'), nl,
+        write('*** Congratulations! You won the game easily! ***'), nl,
+        finish, !
+    ; X == auto_win ->
+        i_am_at(Place),
+        at(auto_win, Place),
+        retract(at(auto_win, Place)),
+        assertz(holding(auto_win)),
+        write('**You picked up the auto_win item! You win immediately!**'), nl,
+        write('*** Congratulations! You won the game automatically! ***'), nl,
+        finish, !
+    ; % General case for other items
+        i_am_at(Place),
+        at(X, Place),
+        retract(at(X, Place)),
+        assertz(holding(X)),
+        write('**Taken.**'), nl, !,
+        update_adversary_goal,
+        adversary_turn
+    ).
 
 take(_) :-
     write('**I don''t see that here.**'), nl.
@@ -723,6 +745,16 @@ take(auto_win) :-
     write('*** Congratulations! You won the game automatically! ***'), nl,
     finish, !.
 
+/* pick up easy_win immediately wins the game */
+take(easy_win) :-
+    i_am_at(Place),
+    at(easy_win, Place),
+    retract(at(easy_win, Place)),
+    assertz(holding(easy_win)),
+    write('**You picked up the easy_win item! You win immediately!**'), nl,
+    write('*** Congratulations! You won the game easily! ***'), nl,
+    finish, !.
+
 /* pick up amulet requires guardian defeated */
 take(amulet) :-
     i_am_at(throne),
@@ -813,8 +845,8 @@ start :-
     assertz(at(rope, entrance)),
     assertz(at(sword, armory)),
     assertz(at(amulet, throne)),
-    assertz(at(armory, hall)), % room markers (unused but present)
     assertz(at(key_fire, armory)), % key initially accessible when chest opened too
+    assertz(at(easy_win, hall)),   % Easy win item in the central hall
     assertz(seed_rand(0)),
     assertz(player_turn_count(0)),  % Start with 0 player turns
     assertz(chaser_patience(5)),    % Chaser won't move aggressively for first 5 player turns
