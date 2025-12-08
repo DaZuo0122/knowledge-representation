@@ -80,7 +80,50 @@ This project implements an **intelligent adversary system** using:
 4. adversary_problem.pddl - PDDL problem with initial state/goals
 
 ---
+## Inspiration Source: Dungeons & Dragons
 
+### How DND Influenced Our Design
+
+***Narrative-Driven Adventure***
+- **Immersive Environment**: Detailed room descriptions create dungeon exploration atmosphere
+- **Item-Driven Progression**: Key items (torch, rope, amulet) advance the story
+- **Discovery Through Exploration**: Players uncover secrets by exploring different rooms
+
+---
+***Rule-Based Decision Making***
+- **Attribute System**: HP system similar to DND character attributes
+- **Skill & Item Interaction**: Using rope to climb, sword to open chest mimics DND skill checks
+- **Combat Mechanics**: Random number-based combat inspired by DND dice rolls
+
+---
+***Dynamic Challenges***
+- **Random Encounters**: Pit events mirror DND random encounter tables
+- **Probabilistic Outcomes**: 50% damage chance, 16.7% item discovery probability
+- **Adaptive Difficulty**: Adversaries adjust strategies based on player actions
+
+---
+## Technical Implementation Differences
+
+### Automated Rule System
+| DND Approach | Our Implementation |
+|--------------|-------------------|
+| Human Dungeon Master | Prolog rule engine + PDDL planner |
+| Physical dice rolling | Software random number generation |
+| Natural language rules | Formal logic predicates |
+
+---
+### Intelligent Adversaries
+- **Real-time Planning**: PDDL-based strategy adjustment during gameplay
+- **Collaborative Behavior**: Two adversaries with complementary strategies
+- **Dynamic Goal Switching**: AI changes objectives based on game state
+
+---
+### Knowledge Representation
+- **Formal Logic Encoding**: Game rules expressed as logical predicates
+- **State-Driven World**: Complete game state queryable and modifiable
+- **Automated Reasoning**: Complex inferences enabled by Prolog engine
+
+---
 ## Intelligent Adversary System
 
 ### Two Types of Adversaries
