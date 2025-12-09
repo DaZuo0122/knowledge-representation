@@ -371,39 +371,37 @@ attack.   % combat
 - **2**: Technical walkthrough of Prolog implementation
 - **3**: PDDL integration & AI adversary explanation
 
+We did added some debug item in game for testing.
+
 ---
 ### Winning Run Demonstration
-```
+
 1. start.
-2. take(torch). n. e. 
+2. take(torch). n. e.
 3. take(sword). open(chest1). take(key_fire).
 4. w. n. attack. take(amulet).
-*** Victory! (Automatic win detection) ***
-```
+***Victory! (Automatic win detection)***
 
 ---
 ### Losing Run Demonstration
-```
 Option 1: Direct capture
-1. start. n. n. 
+1. start. n. n.
 2. Chaser catches player at throne room
-3. *** Game Over ***
+3. ***Game Over***
 
 Option 2: HP depletion
 1. start. d. (enter pit)
 2. Random damage events reduce HP to 0
-3. *** You have perished ***
-```
+3. ***You have perished***
 
 ---
 ### Adversary Intelligence Showcase
-```
+
 Initial state: Chaser at throne, Thief at entrance
 → Player obtains amulet
 → Chaser switches from "get amulet" to "catch player"
 → Dynamic replanning demonstration
 → Thief attempts item theft
-```
 
 ---
 
@@ -423,38 +421,10 @@ Initial state: Chaser at throne, Thief at entrance
 
 ---
 
-## Q&A Preparation
+## Q&A
 
-### Technical Questions
-1. **"How do you handle the latency of external planner calls?"**
-   - Asynchronous planning with game continuing during planning
-   - Fallback to simple heuristics if planning takes too long
-
-2. **"Why choose Pyperplan over other planners?"**
-   - Lightweight, STRIPS-compliant, easy integration with Prolog
-   - Suitable for educational purposes with clear output format
 
 ---
-### Design Questions
-3. **"What influenced your PDDL domain design choices?"**
-   - Focus on STRIPS level for simplicity and reliability
-   - Actions designed to reflect natural adversary behaviors
-
-4. **"How did you test the PDDL integration?"**
-   - Multiple testing methods (full game, direct planner calls)
-   - Verification of action validity and goal achievement
-
----
-
-## Conclusion & Future Work
-
-### What We've Built
-- A fully functional text adventure game with intelligent adversaries
-- PDDL integration demonstrating automated planning concepts
-- Dynamic game world with responsive AI opponents
-
----
-
 ### Final Thoughts
 This project successfully demonstrates the integration of logic programming with automated planning, creating an engaging game experience while showcasing important knowledge representation concepts.
 
